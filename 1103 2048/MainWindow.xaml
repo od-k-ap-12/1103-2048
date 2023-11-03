@@ -1,0 +1,52 @@
+﻿<Window x:Class="_1103_2048.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_1103_2048"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="200*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Background="#A69185">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Content="2" Foreground="#796255" Background="#FFF0E6" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="1" Grid.Column="0" Content="4" Foreground="#796255" Background="#F6EBCD" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="2" Grid.Column="0" Content="8" Foreground="#FFF0E6" Background="#F3AE80" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="3" Grid.Column="0" Content="16" Foreground="#FFF0E6" Background="#E28B52" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="0" Grid.Column="1" Content="32" Foreground="#FFF0E6" Background="#DA5C36" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="1" Grid.Column="1" Content="64" Foreground="#FFF0E6" Background="#B33E1B" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="128" Foreground="#FFF0E6" Background="#FFDF84" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="256" Foreground="#FFF0E6" Background="#FAD775" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="0" Grid.Column="2" Content="512" Foreground="#FFF0E6" Background="#F9E062" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="1" Grid.Column="2" Content="1024" Foreground="#FFF0E6" Background="#EBD049" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+            <Button Grid.Row="2" Grid.Column="2" Content="2048" Foreground="#FFF0E6" Background="#D5B720" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" BorderThickness="0" Margin="10"/>
+
+        </Grid>
+        <Grid Grid.Row="0" Background="#A69185">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" Margin="10" Background="#A69185">
+                <TextBlock Text="Score " Background="#A69185" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" Foreground="#FFF3EC" TextWrapping="Wrap" TextAlignment="Center" />
+                <TextBlock x:Name="ScoreValue" Text="0" Background="#A69185" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" Foreground="#FFF3EC" TextWrapping="Wrap" TextAlignment="Center"/>
+            </StackPanel>
+            <Button Grid.Column="1" Grid.Row="0" Content="New Game" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" Foreground="#FFF3EC" Background="#796255" Margin="9" BorderThickness="0"/>
+        </Grid>
+    </Grid>
+</Window>
