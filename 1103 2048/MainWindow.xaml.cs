@@ -155,7 +155,8 @@ namespace _1103_2048
                         else if (Tiles[k, i].Text == Tiles[j, i].Text)
                         {
 
-                            Tiles[k++, i].Text += Tiles[j, i].Text;
+                            Tiles[k++, i].Text = Tiles[j, i].Text+ Tiles[j, i].Text;
+                            AddToScore(Convert.ToString(Convert.ToInt32(Tiles[j, i].Text) * 2));
                             RewriteTiles();
                             RecolorTiles();
                             Tiles[j++, i].Text = "-";
@@ -164,8 +165,6 @@ namespace _1103_2048
                             j++;
                     }
                 }
-                RecolorTiles();
-                SpawnNewTile();
                 RecolorTiles();
             }
             else if (e.Key == Key.Down)
@@ -186,7 +185,8 @@ namespace _1103_2048
                         }
                         else if (Tiles[k, i].Text == Tiles[j, i].Text)
                         {
-                            Tiles[k--, i].Text += Tiles[j, i].Text;
+                            Tiles[k--, i].Text = Tiles[j, i].Text + Tiles[j, i].Text;
+                            AddToScore(Convert.ToString(Convert.ToInt32(Tiles[j,i].Text)*2));
                             RewriteTiles();
                             RecolorTiles();
                             Tiles[j--, i].Text = "-";
@@ -222,6 +222,7 @@ namespace _1103_2048
                                 Tiles[j, k].Text = "-";
                                 RewriteTiles();
                                 RecolorTiles();
+                                AddToScore(Tiles[j, k - 1].Text);
                                 break;
                             }
                             else if (Tiles[j, k - 1].Text == "-")
@@ -263,6 +264,7 @@ namespace _1103_2048
                                 Tiles[j, k].Text = "-";
                                 RewriteTiles();
                                 RecolorTiles();
+                                AddToScore(Tiles[j, k + 1].Text);
                                 break;
                             }
                             else if (Tiles[j, k + 1].Text == "-")
@@ -298,6 +300,12 @@ namespace _1103_2048
             }
             RecolorTiles();
             SpawnNewTile();
+            ScoreValue.Text = "0";
+        }
+        private void AddToScore(string value)
+        {
+            int CurrentScore = Convert.ToInt32(ScoreValue.Text)+Convert.ToInt32(value);
+            ScoreValue.Text=Convert.ToString(CurrentScore);
         }
     }
 }
