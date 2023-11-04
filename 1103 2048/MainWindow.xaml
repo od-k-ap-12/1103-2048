@@ -52,7 +52,7 @@
                 <TextBlock Text="Score " Background="#A69185" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" Foreground="#FFF3EC" TextWrapping="Wrap" TextAlignment="Center" />
                 <TextBlock x:Name="ScoreValue" Text="0" Background="#A69185" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" Foreground="#FFF3EC" TextWrapping="Wrap" TextAlignment="Center"/>
             </StackPanel>
-            <Button Grid.Column="1" Grid.Row="0" Content="New Game" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" Foreground="#FFF3EC" Background="#796255" Margin="9" BorderThickness="0"/>
+            <Button Grid.Column="1" Grid.Row="0" Content="New Game" FontSize="30" FontFamily="ComicSansMS" FontWeight="Bold" Foreground="#FFF3EC" Background="#796255" Margin="9" BorderThickness="0" Click="RestartGame"/>
         </Grid>
     </Grid>
 </Window>

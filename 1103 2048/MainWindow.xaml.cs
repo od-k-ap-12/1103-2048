@@ -286,6 +286,19 @@ namespace _1103_2048
                     e.Handled = true;
                 }
             }
+
+        private void RestartGame(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    Tiles[i, k].Text = "-";
+                }
+            }
+            RecolorTiles();
+            SpawnNewTile();
         }
     }
+}
 
