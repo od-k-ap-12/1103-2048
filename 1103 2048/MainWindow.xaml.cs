@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Formats.Asn1.AsnWriter;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace _1103_2048
@@ -22,7 +25,7 @@ namespace _1103_2048
     public partial class MainWindow : Window
     {
 
-        TextBlock[ , ] Tiles = new TextBlock[4,4];
+        TextBlock[,] Tiles = new TextBlock[4, 4];
         Dictionary<string, string> TileColorList = new Dictionary<string, string>();
         public MainWindow()
         {
@@ -66,24 +69,24 @@ namespace _1103_2048
             Tiles[2, 3] = Tile23;
 
             Tiles[3, 0] = Tile30;
-            Tiles[3, 1] = Tile31;  
+            Tiles[3, 1] = Tile31;
             Tiles[3, 2] = Tile32;
             Tiles[3, 3] = Tile33;
         }
         public void RewriteTiles()
         {
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 for (int k = 0; k < 4; k++)
                 {
-                    if (Tiles[i, k].Text != "-" && Tiles[i,k].Text.Length>1)
+                    if (Tiles[i, k].Text != "-" && Tiles[i, k].Text.Length > 1)
                     {
                         string subtext = Tiles[i, k].Text.Substring(0, Tiles[i, k].Text.Length / 2);
                         subtext = Convert.ToString(Convert.ToInt32(subtext) * 2);
                         Tiles[i, k].Text = subtext;
                     }
                 }
-            }  
+            }
         }
         public void RecolorTiles()
         {
@@ -91,11 +94,11 @@ namespace _1103_2048
             {
                 for (int k = 0; k < 4; k++)
                 {
-                    foreach(var item in TileColorList)
+                    foreach (var item in TileColorList)
                     {
-                        if (Tiles[i,k].Text==item.Key)
+                        if (Tiles[i, k].Text == item.Key)
                         {
-                            Tiles[i, k].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(item.Value));
+                            Tiles[i, k].Background = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(item.Value));
                         }
                     }
                 }
@@ -105,23 +108,23 @@ namespace _1103_2048
         {
             Random random = new Random();
             int CalculateTileValue = random.Next(1, 100);
-            SolidColorBrush TileColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF0E6"));
+            SolidColorBrush TileColor = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFF0E6"));
             string TileValue;
-            if (CalculateTileValue > 10) 
+            if (CalculateTileValue > 10)
             {
-                TileValue = "2"; 
+                TileValue = "2";
             }
-            else 
-            { 
+            else
+            {
                 TileValue = "4";
             }
             bool Success = false;
             var bc = new BrushConverter();
             while (!Success)
             {
-                int RandomRow=random.Next(0,4);
-                int RandomCol=random.Next(0,4);
-                if(Tiles[RandomRow,RandomCol].Text == "-")
+                int RandomRow = random.Next(0, 4);
+                int RandomCol = random.Next(0, 4);
+                if (Tiles[RandomRow, RandomCol].Text == "-")
                 {
                     Tiles[RandomRow, RandomCol].Text = TileValue;
                     Tiles[RandomRow, RandomCol].Background = TileColor;
@@ -134,80 +137,155 @@ namespace _1103_2048
         public void OnKeyDown(object sender, KeyEventArgs e)
         {
             RecolorTiles();
-            if(e.Key == Key.Up)
+            if (e.Key == Key.Up)
             {
-                for (int col = 0; col < 4; col++)
+                for (int i = 0; i < 4; i++)
                 {
-                    int pivot = 0, row = 1;
+                    int k = 0, j = 1;
 
-                    while (row < 4)
+                    while (j < 4)
                     {
-                        if (Tiles[row, col].Text == "-")
-                            row++;
-                        else if (Tiles[pivot, col].Text == "-")
+                        if (Tiles[j, i].Text == "-")
+                            j++;
+                        else if (Tiles[k, i].Text == "-")
                         {
-                            Tiles[pivot, col].Text = Tiles[row, col].Text;
-                            Tiles[row++, col].Text = "-";
+                            Tiles[k, i].Text = Tiles[j, i].Text;
+                            Tiles[j++, i].Text = "-";
                         }
-                        else if (Tiles[pivot, col].Text == Tiles[row, col].Text)
+                        else if (Tiles[k, i].Text == Tiles[j, i].Text)
                         {
 
-                            Tiles[pivot++, col].Text += Tiles[row, col].Text;
+                            Tiles[k++, i].Text += Tiles[j, i].Text;
                             RewriteTiles();
                             RecolorTiles();
-                            Tiles[row++, col].Text = "-";
+                            Tiles[j++, i].Text = "-";
                         }
-                        else if (++pivot == row)
-                            row++;
+                        else if (++k == j)
+                            j++;
                     }
                 }
                 RecolorTiles();
                 SpawnNewTile();
                 RecolorTiles();
             }
-            else if(e.Key == Key.Down)
+            else if (e.Key == Key.Down)
             {
                 RecolorTiles();
-                for (int col = 0; col < 4; col++)
+                for (int i = 0; i < 4; i++)
                 {
-                    int pivot = 3, row = 2;
+                    int k = 3, j = 2;
 
-                    while (row >= 0)
+                    while (j >= 0)
                     {
-                        if (Tiles[row, col].Text == "-")
-                            row--;
-                        else if (Tiles[pivot, col].Text == "-")
+                        if (Tiles[j, i].Text == "-")
+                            j--;
+                        else if (Tiles[k, i].Text == "-")
                         {
-                            Tiles[pivot, col].Text = Tiles[row, col].Text;
-                            Tiles[row--, col].Text = "-";
+                            Tiles[k, i].Text = Tiles[j, i].Text;
+                            Tiles[j--, i].Text = "-";
                         }
-                        else if (Tiles[pivot, col].Text == Tiles[row, col].Text)
+                        else if (Tiles[k, i].Text == Tiles[j, i].Text)
                         {
-                            Tiles[pivot--, col].Text += Tiles[row, col].Text;
+                            Tiles[k--, i].Text += Tiles[j, i].Text;
                             RewriteTiles();
                             RecolorTiles();
-                            Tiles[row--, col].Text = "-";
+                            Tiles[j--, i].Text = "-";
                         }
-                        else if (--pivot == row)
-                            row--;
+                        else if (--k == j)
+                            j--;
                     }
                 }
                 RecolorTiles();
                 SpawnNewTile();
                 RecolorTiles();
             }
-            else if(e.Key == Key.Left)
+            else if (e.Key == Key.Left)
             {
-
+                for (int i = 1; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        if (Tiles[j, i].Text == "-")
+                        {
+                            continue;
+                        }
+                        int k = i;
+                        while (k > 0)
+                        {
+                            if (Tiles[j, k].Text != Tiles[j, k - 1].Text && Tiles[j, k - 1].Text != "-")
+                            {
+                                break;
+                            }
+                            if (Tiles[j, k].Text == Tiles[j, k - 1].Text)
+                            {
+                                Tiles[j, k - 1].Text = Tiles[j, k - 1].Text + Tiles[j, k - 1].Text;
+                                Tiles[j, k].Text = "-";
+                                RewriteTiles();
+                                RecolorTiles();
+                                break;
+                            }
+                            else if (Tiles[j, k - 1].Text == "-")
+                            {
+                                int val = Convert.ToInt32(Tiles[j, k].Text);
+                                Tiles[j, k].Text = Tiles[j, k - 1].Text;
+                                Tiles[j, k - 1].Text = Convert.ToString(val);
+                                k--;
+                                RewriteTiles();
+                                RecolorTiles();
+                            }
+                        }
+                    }
+                }
             }
-            else if (e.Key == Key.Right)
-            {
+                else if (e.Key == Key.Right)
+                {
+                RewriteTiles();
+                RecolorTiles();
+                for (int i = 2; i >= 0; i--)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        if (Tiles[j, i].Text == "-")
+                        {
+                            continue;
+                        }
+                        int k = i;
 
+                        while (k < 4 - 1)
+                        {
+                            if (Tiles[j, k].Text != Tiles[j, k + 1].Text && Tiles[j, k + 1].Text != "-")
+                            {
+                                break;
+                            }
+                            if (Tiles[j, k].Text == Tiles[j, k + 1].Text)
+                            {
+                                Tiles[j, k + 1].Text = Tiles[j, k + 1].Text + Tiles[j, k + 1].Text;
+                                Tiles[j, k].Text = "-";
+                                RewriteTiles();
+                                RecolorTiles();
+                                break;
+                            }
+                            else if (Tiles[j, k + 1].Text == "-")
+                            {
+                                string val = Tiles[j, k].Text;
+                                Tiles[j, k].Text = Tiles[j, k + 1].Text;
+                                Tiles[j, k + 1].Text = val;
+                                k++;
+                                RewriteTiles();
+                                RecolorTiles();
+                            }
+                        }
+                    }
+                }
+                RecolorTiles();
+                SpawnNewTile();
+                RecolorTiles();
             }
-            else
-            {
-                e.Handled = true;
+                else
+                {
+                    e.Handled = true;
+                }
             }
         }
     }
-}
+
